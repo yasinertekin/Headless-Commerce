@@ -8,7 +8,7 @@ abstract class ReqresViewModel extends LoadingStatefull<StatefulWidget> with Pro
   late final IReqresService reqresService;
 
   List<Products>? resources = [];
-  List<Products>? uniqueResources = [];
+  Map<String?, List<Products>> groupedResources = {};
 
   @override
   initState() {
@@ -23,26 +23,18 @@ abstract class ReqresViewModel extends LoadingStatefull<StatefulWidget> with Pro
     resources = (await reqresService.fetchItems())?.products ?? [];
 
     // Unique elemanları seçmek için
-    uniqueResources = getUniqueResources(resources);
+    uniqueCategorySelected();
 
     changeLoading();
   }
-}
 
-List<Products> getUniqueResources(List<Products>? resources) {
-  // Benzersiz kategorileri saklamak için bir harita oluşturun
-  Map<String, Products> uniqueCategoriesMap = {};
-
-  // Döngü ile listedeki öğeleri gezin
-  for (var item in resources ?? []) {
-    // Her bir öğenin "category" özelliğini alın
-    String category = item.category ?? '';
-
-    // Eğer bu kategori daha önce eklenmemişse, haritaya ekle
-    if (!uniqueCategoriesMap.containsKey(category)) {
-      uniqueCategoriesMap[category] = item;
+  void uniqueCategorySelected() {
+    groupedResources.clear();
+    for (var product in resources!) {
+      if (!groupedResources.containsKey(product.category)) {
+        groupedResources[product.category!] = [];
+      }
+      groupedResources[product.category]!.add(product);
     }
   }
-
-  return uniqueCategoriesMap.values.toList();
 }

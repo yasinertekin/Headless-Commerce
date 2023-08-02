@@ -62,7 +62,6 @@ class _SearchViewState extends ReqresViewModel with AutomaticKeepAliveClientMixi
                       child: SearchBar(),
                     ),
                     const SizedBox(height: 10),
-                    const Text('data'),
                   ],
                 ),
               ),

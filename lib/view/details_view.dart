@@ -14,15 +14,20 @@ class _DetailsViewState extends State<DetailsView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Details'),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(widget.productCatalogModel.title ?? ''),
-            ],
+          elevation: 0,
+          //backgroundColor: Colors.transparent,
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(200),
+            child: Stack(
+              children: [
+                Image.network(widget.productCatalogModel.thumbnail ?? ''),
+              ],
+            ),
           ),
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [],
         ));
   }
 }

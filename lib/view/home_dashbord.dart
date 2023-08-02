@@ -4,6 +4,7 @@ import 'package:headless_commerce/components/CustomCard/resource_card.dart';
 import 'package:headless_commerce/routing/app_router.dart';
 import 'package:headless_commerce/service/product_catalog_model.dart';
 import 'package:headless_commerce/styles/colors.dart';
+import 'package:headless_commerce/view/category_screen.dart';
 import 'package:headless_commerce/view/details_view.dart';
 
 import 'package:headless_commerce/widget/LoadingScreen/loading_screen.dart';
@@ -44,7 +45,9 @@ class _HomeDashbordState extends ReqresViewModel with TickerProviderStateMixin, 
                   return Column(
                     children: [
                       _HorizontalImageList(resources: resources),
-                      _ThumNailGrid(uniqueResources: uniqueResources),
+                      _ThumNailGrid(
+                        groupedResources: groupedResources.map((key, value) => MapEntry(key!, value)),
+                      ),
                       const _BuildNewProductHeader(),
                       buildHorizontalResourceList(context),
                     ],
@@ -111,10 +114,10 @@ class _BuildNewProductHeader extends StatelessWidget {
 
 class _ThumNailGrid extends StatelessWidget {
   const _ThumNailGrid({
-    required this.uniqueResources,
+    required this.groupedResources,
   });
 
-  final List<Products>? uniqueResources;
+  final Map<String, List<Products>> groupedResources;
 
   @override
   Widget build(BuildContext context) {
@@ -123,40 +126,69 @@ class _ThumNailGrid extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: uniqueResources?.length ?? 0,
         scrollDirection: Axis.vertical,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 3, // Yatayda tek sütun olacak
         ),
+        itemCount: groupedResources.length,
         itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {},
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Center(
-                  child: Card(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      width: MediaQuery.of(context).size.width,
-                      child: Image.network(
-                          color: Colors.black.withOpacity(0.5),
-                          colorBlendMode: BlendMode.darken,
-                          uniqueResources?[index].thumbnail ?? '',
-                          fit: BoxFit.fill),
-                    ),
-                  ),
+          String category = groupedResources.keys.elementAt(index);
+
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      CategoryListScreen(products: groupedResources[category] ?? [], categoryTitle: category),
                 ),
-                Center(
-                  child: Text(
-                      style: const TextStyle(color: Colors.white, fontSize: 15),
-                      uniqueResources?[index].category ?? ''),
-                ),
-              ],
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(1.0),
+              child: _CategoryHeader(groupedResources: groupedResources, category: category),
             ),
           );
         },
       ),
+    );
+  }
+}
+
+class _CategoryHeader extends StatelessWidget {
+  const _CategoryHeader({
+    required this.groupedResources,
+    required this.category,
+  });
+
+  final Map<String, List<Products>> groupedResources;
+  final String category;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Center(
+          child: Image.network(
+            fit: BoxFit.fill,
+            height: MediaQuery.of(context).size.height * 0.20,
+            groupedResources[category]?[0].thumbnail ?? '',
+            color: Colors.black.withOpacity(0.3), // Siyah filtre için renk ve opaklık belirleyin
+            colorBlendMode: BlendMode.darken, // Renk karıştırma modunu seçin
+          ),
+        ),
+        Center(
+          child: Text(
+            textAlign: TextAlign.center,
+            category,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: MyColor().white,
+                ),
+          ),
+        ),
+      ],
     );
   }
 }

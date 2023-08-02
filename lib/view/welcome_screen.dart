@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:headless_commerce/components/CustomButton/custom_button.dart';
+import 'package:headless_commerce/product/service/extension/image_path_extension.dart';
 import 'package:headless_commerce/styles/colors.dart';
 import 'package:headless_commerce/view/login_screen_view.dart';
 
@@ -49,12 +50,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   children: [
                     Expanded(
                       child: Container(
-                        color: MyColor().illuminatingEmerald, // Saat tarafı kırmızı
+                        color: MyColor().illuminatingEmerald,
                       ),
                     ),
                     Expanded(
-                      child: Container(color: MyColor().white // Tarih tarafı beyaz
-                          ),
+                      child: Container(color: MyColor().white),
                     ),
                   ],
                 ),
@@ -194,16 +194,6 @@ class _PageSelectorButtonState extends State<_PageSelectorButton> {
 }
 
 enum ImagePaths { welcomescreen1, welcomescreen2, welcomescreen3, welcomescreen0 }
-
-extension ImagePathsExtension on ImagePaths {
-  String path() {
-    return 'assets/images/$name.png';
-  }
-
-  Widget toWidget({double height = 300}) {
-    return Image.asset(path(), height: height);
-  }
-}
 
 class _PageScreen extends StatelessWidget with MyColor {
   _PageScreen({Key? key, required this.imageUrl, required this.title}) : super(key: key);

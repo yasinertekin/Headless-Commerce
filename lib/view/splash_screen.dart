@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart ';
+import 'package:headless_commerce/product/service/extension/image_path_extension.dart';
 import 'package:headless_commerce/styles/colors.dart';
 
 import 'welcome_screen.dart';

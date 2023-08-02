@@ -21,17 +21,24 @@ class ResourceCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.4,
+        width: 160,
         height: 200,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Image.network(
-                thumbnailUrl,
-                fit: BoxFit.fill,
-                height: MediaQuery.of(context).size.width * 0.23,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                ),
+                child: Image.network(
+                  thumbnailUrl,
+                  fit: BoxFit.fill,
+                  height: 100,
+                  width: 200,
+                ),
               ),
             ),
             Padding(
