@@ -19,8 +19,6 @@ class _SearchViewState extends ReqresViewModel with AutomaticKeepAliveClientMixi
         ? const LoadingScreen()
         : Scaffold(
             appBar: AppBar(
-              backgroundColor: MyColor().illuminatingEmerald,
-              elevation: 0,
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(80),
                 child: Column(

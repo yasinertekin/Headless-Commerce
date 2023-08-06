@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:headless_commerce/styles/colors.dart';
+import 'package:provider/provider.dart';
 
-import 'view/welcome_screen.dart';
+import 'provider/tab_change_provider.dart';
+import 'view/WelcomeScreen/welcome_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => TabChangeProvider(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -24,7 +30,12 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(
+          actionsIconTheme: IconThemeData(color: MyColor().white),
+          backgroundColor: MyColor().illuminatingEmerald,
+          elevation: 0,
+          iconTheme: IconThemeData(color: MyColor().white),
+        ),
       ),
       home: WelcomeScreen(),
     );

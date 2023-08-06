@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart%20';
-import 'package:headless_commerce/view/welcome_screen.dart';
 
-extension ImagePathsExtension on ImagePaths {
+/*extension ImagePathsExtension on ImagePaths {
   String path() {
     return 'assets/images/$name.png';
   }
@@ -10,3 +8,4 @@ extension ImagePathsExtension on ImagePaths {
     return Image.asset(path(), height: height);
   }
 }
+*/
