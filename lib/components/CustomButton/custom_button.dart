@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart ';
-import 'package:headless_commerce/provider/tab_change_provider.dart';
-import 'package:provider/provider.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -18,20 +16,16 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TabChangeProvider>(
-      builder: (context, tabChangeProvider, child) {
-        return ElevatedButton(
-          onPressed: onPressed,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: backgroundColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            minimumSize: const Size(300, 50),
-          ),
-          child: Text(buttonText, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: textColor)),
-        );
-      },
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: backgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        minimumSize: const Size(300, 50),
+      ),
+      child: Text(buttonText, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: textColor)),
     );
   }
 }
